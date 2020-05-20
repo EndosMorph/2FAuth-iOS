@@ -48,6 +48,7 @@ final class OneTimePasswordCell: UITableViewCell {
     private var fetchIconOperation: FavIconCancellationToken?
 
     private var cellHeight: CGFloat = 0
+    private var oneTimePasswordCode: String = ""
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -166,6 +167,16 @@ final class OneTimePasswordCell: UITableViewCell {
         UIView.animate(withDuration: duration, delay: delay, options: options, animations: {
             self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.98, y: 0.98) : .identity
             self.overlayView.alpha = self.isHighlighted ? 0.6 : 1.0
+            
+        }, completion: { (finished: Bool) in
+            UIView.transition(with: self.codeLabel,
+                 duration: 2.25,
+                  options: .transitionCrossDissolve,
+               animations: {
+                   self.codeLabel.text = "Copied"
+            }, completion: { (finished: Bool) in
+                self.codeLabel.text = self.oneTimePasswordCode
+            })
         })
     }
 
@@ -221,7 +232,8 @@ final class OneTimePasswordCell: UITableViewCell {
         )
 
         nextPasswordButton.isHidden = !oneTimePassword.canManualRefresh
-        codeLabel.text = oneTimePassword.code
+        oneTimePasswordCode = oneTimePassword.code
+        codeLabel.text = oneTimePasswordCode
 
         updateLabels()
         setNeedsLayout()
