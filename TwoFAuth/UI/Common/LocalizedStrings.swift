@@ -123,6 +123,8 @@ enum LocalizedStrings {
 
     static let crypterEncryptionFailure = NSLocalizedString("Failed to encrypt data to send to the iCloud.", comment: "")
     static let crypterDecryptionFailure = NSLocalizedString("Failed to decrypt data from iCloud.", comment: "")
+    
+    static let copied = NSLocalizedString("Copied", comment: "")
 
     static func tryAgainIn(_ minutes: Int) -> String {
         let format = NSLocalizedString("try again in X minute(s)", comment: "")

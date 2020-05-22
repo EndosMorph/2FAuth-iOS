@@ -164,16 +164,20 @@ final class OneTimePasswordCell: UITableViewCell {
         let duration: TimeInterval = isHighlighted ? 0.05 : Styles.Animations.defaultDuration
         let delay: TimeInterval = isHighlighted ? 0 : 0.1
         let options: UIView.AnimationOptions = isHighlighted ? .curveEaseIn : .curveEaseOut
+        
+        let durationMarkedAsCopied: TimeInterval = 2.75
+        let optionsMarkedAsCopied: UIView.AnimationOptions = .transitionCrossDissolve
+        
         UIView.animate(withDuration: duration, delay: delay, options: options, animations: {
             self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.98, y: 0.98) : .identity
             self.overlayView.alpha = self.isHighlighted ? 0.6 : 1.0
             
         }, completion: { (finished: Bool) in
             UIView.transition(with: self.codeLabel,
-                 duration: 2.25,
-                  options: .transitionCrossDissolve,
+                 duration: durationMarkedAsCopied,
+                  options: optionsMarkedAsCopied,
                animations: {
-                   self.codeLabel.text = "Copied"
+                   self.codeLabel.text = LocalizedStrings.copied
             }, completion: { (finished: Bool) in
                 self.codeLabel.text = self.oneTimePasswordCode
             })
